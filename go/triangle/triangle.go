@@ -21,8 +21,6 @@ const (
 
 // KindFromSides should have a comment documenting it.
 func KindFromSides(a, b, c float64) Kind {
-	var k Kind
-
 	if math.IsNaN(a) || math.IsNaN(b) || math.IsNaN(c) {
 		return NaT
 	}
@@ -59,5 +57,5 @@ func KindFromSides(a, b, c float64) Kind {
 		return Sca
 	}
 
-	return k
+	return NaT
 }
