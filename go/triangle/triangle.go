@@ -21,6 +21,11 @@ const (
 
 // KindFromSides should have a comment documenting it.
 func KindFromSides(a, b, c float64) Kind {
+<<<<<<< HEAD
+=======
+	var k Kind
+
+>>>>>>> 2a78424d496ef1b8aaf6a3f5f58630694dba3840
 	if math.IsNaN(a) || math.IsNaN(b) || math.IsNaN(c) {
 		return NaT
 	}
