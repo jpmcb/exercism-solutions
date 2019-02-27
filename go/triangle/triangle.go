@@ -8,24 +8,19 @@ type Kind int
 
 const (
 	// Deg is a Degenerate triangle
-	Deg Kind = -2
+	Deg Kind = iota
 	// NaT is Not a Triangle
-	NaT Kind = -1
+	NaT
 	// Equ is a equilateral triangle
-	Equ Kind = 0
+	Equ
 	// Iso is a isosceles triangle
-	Iso Kind = 1
+	Iso
 	// Sca is a scalene triangle
-	Sca Kind = 2
+	Sca
 )
 
 // KindFromSides should have a comment documenting it.
 func KindFromSides(a, b, c float64) Kind {
-<<<<<<< HEAD
-=======
-	var k Kind
-
->>>>>>> 2a78424d496ef1b8aaf6a3f5f58630694dba3840
 	if math.IsNaN(a) || math.IsNaN(b) || math.IsNaN(c) {
 		return NaT
 	}
