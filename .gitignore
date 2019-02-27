@@ -1,0 +1,4 @@
+.exercism/
+*_test.go
+*_test.sh
+README.md
