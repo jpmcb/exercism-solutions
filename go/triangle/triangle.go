@@ -1,7 +1,9 @@
 // Package triangle implements has constants and methods associated with decyphering the input triangle
 package triangle
 
-import "math"
+import (
+	"math"
+)
 
 // Kind is the status code for the type of triangle
 type Kind int
