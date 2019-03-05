@@ -5,12 +5,28 @@
 // https://golang.org/doc/effective_go.html#commentary
 package bob
 
+const (
+	tab   rune = 9
+	space rune = 32
+)
+
 // Hey should have a comment documenting it.
 func Hey(remark string) string {
+	var (
+		isCapitalized bool
+		isEmpty       bool
+		hasLetters    bool
+		lastChar      byte
+	)
+	isCapitalized = true
+	isEmpty = true
+	hasLetters = false
 
-	isCapitalized := true
-	hasLetters := false
-	lastChar := remark[len(remark)-1]
+	if len(remark) > 0 {
+		lastChar = remark[len(remark)-1]
+	} else {
+		lastChar = 0x0
+	}
 
 	for _, x := range remark {
 		if x >= 65 && x <= 90 {
@@ -21,9 +37,17 @@ func Hey(remark string) string {
 			hasLetters = true
 			isCapitalized = false
 		}
+
+		if x != tab || x != space {
+			isEmpty = false
+		}
 	}
 
-	if !hasLetters && lastChar == '?' {
+	if lastChar == 0x0 {
+		return "Fine. Be that way!"
+	} else if isEmpty {
+		return "Fine. Be that way!"
+	} else if !hasLetters && lastChar == '?' {
 		return "Sure."
 	} else if !hasLetters {
 		return "Whatever."
