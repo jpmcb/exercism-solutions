@@ -1,54 +1,49 @@
-// This is a "stub" file.  It's a little start on your solution.
-// It's not a complete solution though; you have to write some code.
-
-// Package bob should have a package comment that summarizes what it's about.
-// https://golang.org/doc/effective_go.html#commentary
+// Package bob contains constants to define various ASCII values used in
+// string matching functions. Further, exposes the Hey function that
+// returns the appropriate bob saying
 package bob
 
 const (
-	tab   rune = 9
-	space rune = 32
-	cr    rune = 13
-	nl    rune = 10
+	null           rune = 0
+	tab            rune = 9
+	space          rune = 32
+	cr             rune = 13
+	nl             rune = 10
+	upperCaseStart rune = 65
+	upperCaseEnd   rune = 90
+	lowerCaseStart rune = 97
+	lowerCaseEnd   rune = 122
 )
 
-func getLastChar(remark string) byte {
-	var lastChar byte
+func getLastChar(remark string) rune {
+	var lastChar rune
 
 	if len(remark) == 0 {
-		return 0x0
+		return null
 	}
 
 	i := len(remark) - 1
-	lastChar = remark[i]
+	lastChar = rune(remark[i])
 
-	for (lastChar == 9 || lastChar == 32 || lastChar == 13 || lastChar == 10) && i > 0 {
+	for (lastChar == tab || lastChar == space || lastChar == cr || lastChar == nl) && i > 0 {
 		i--
-		lastChar = remark[i]
+		lastChar = rune(remark[i])
 	}
 
 	return lastChar
 }
 
-// Hey should have a comment documenting it.
-func Hey(remark string) string {
-	var (
-		isAllCapitalized bool
-		isEmpty          bool
-		hasLetters       bool
-		lastChar         byte
-	)
-	isAllCapitalized = true
-	isEmpty = true
-	hasLetters = false
-	lastChar = getLastChar(remark)
+func checkStringConditions(remark string) (bool, bool, bool) {
+	isAllCapitalized := true
+	isEmpty := true
+	hasLetters := false
 
 	for _, x := range remark {
-		if x >= 65 && x <= 90 {
+		if x >= upperCaseStart && x <= upperCaseEnd {
 			hasLetters = true
 		}
 
-		if x >= 97 && x <= 122 {
+		if x >= lowerCaseStart && x <= lowerCaseEnd {
 			hasLetters = true
 			isAllCapitalized = false
 		}
@@ -58,7 +53,17 @@ func Hey(remark string) string {
 		}
 	}
 
-	if lastChar == 0x0 {
+	return isAllCapitalized, isEmpty, hasLetters
+}
+
+// Hey performs logic to check the input string and determine it's various properties.
+// These properties are then used to return the appropriate statement defined in the readme
+func Hey(remark string) string {
+
+	lastChar := getLastChar(remark)
+	isAllCapitalized, isEmpty, hasLetters := checkStringConditions(remark)
+
+	if lastChar == null {
 		return "Fine. Be that way!"
 	} else if isEmpty {
 		return "Fine. Be that way!"
