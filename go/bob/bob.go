@@ -8,25 +8,40 @@ package bob
 const (
 	tab   rune = 9
 	space rune = 32
+	cr    rune = 13
+	nl    rune = 10
 )
+
+func getLastChar(remark string) byte {
+	var lastChar byte
+
+	if len(remark) == 0 {
+		return 0x0
+	}
+
+	i := len(remark) - 1
+	lastChar = remark[i]
+
+	for (lastChar == 9 || lastChar == 32 || lastChar == 13 || lastChar == 10) && i > 0 {
+		i--
+		lastChar = remark[i]
+	}
+
+	return lastChar
+}
 
 // Hey should have a comment documenting it.
 func Hey(remark string) string {
 	var (
-		isCapitalized bool
-		isEmpty       bool
-		hasLetters    bool
-		lastChar      byte
+		isAllCapitalized bool
+		isEmpty          bool
+		hasLetters       bool
+		lastChar         byte
 	)
-	isCapitalized = true
+	isAllCapitalized = true
 	isEmpty = true
 	hasLetters = false
-
-	if len(remark) > 0 {
-		lastChar = remark[len(remark)-1]
-	} else {
-		lastChar = 0x0
-	}
+	lastChar = getLastChar(remark)
 
 	for _, x := range remark {
 		if x >= 65 && x <= 90 {
@@ -35,10 +50,10 @@ func Hey(remark string) string {
 
 		if x >= 97 && x <= 122 {
 			hasLetters = true
-			isCapitalized = false
+			isAllCapitalized = false
 		}
 
-		if x != tab || x != space {
+		if x != tab && x != space && x != cr && x != nl {
 			isEmpty = false
 		}
 	}
@@ -51,11 +66,11 @@ func Hey(remark string) string {
 		return "Sure."
 	} else if !hasLetters {
 		return "Whatever."
-	} else if isCapitalized && lastChar == '!' {
+	} else if isAllCapitalized && lastChar == '!' {
 		return "Whoa, chill out!"
-	} else if isCapitalized && lastChar == '?' {
+	} else if isAllCapitalized && lastChar == '?' {
 		return "Calm down, I know what I'm doing!"
-	} else if isCapitalized {
+	} else if isAllCapitalized {
 		return "Whoa, chill out!"
 	} else if lastChar == '?' {
 		return "Sure."
