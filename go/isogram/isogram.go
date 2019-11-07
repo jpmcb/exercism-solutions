@@ -6,15 +6,13 @@ import "strings"
 // ignores case, hyphines, and spaces
 func IsIsogram(i string) bool {
 	i = strings.ToLower(i)
+	letterMap := make(map[rune]bool)
 
-	letterMap := make(map[rune]int)
 	for _, char := range i {
 		_, ok := letterMap[char]
 		if !ok {
-			letterMap[char] = 1
-		} else if char == '-' || char == ' ' {
-			letterMap[char]++
-		} else if letterMap[char] == 1 {
+			letterMap[char] = true
+		} else if char != '-' && char != ' ' {
 			return false
 		}
 	}
