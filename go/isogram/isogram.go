@@ -9,8 +9,7 @@ func IsIsogram(i string) bool {
 	letterMap := make(map[rune]bool)
 
 	for _, char := range i {
-		_, ok := letterMap[char]
-		if !ok {
+		if !letterMap[char] {
 			letterMap[char] = true
 		} else if char != '-' && char != ' ' {
 			return false
