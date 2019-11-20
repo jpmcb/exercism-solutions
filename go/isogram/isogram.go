@@ -9,11 +9,15 @@ func IsIsogram(i string) bool {
 	letterMap := make(map[rune]bool)
 
 	for _, char := range i {
-		if !letterMap[char] {
-			letterMap[char] = true
-		} else if char != '-' && char != ' ' {
+		if char == '-' || char == ' ' {
+			continue
+		}
+
+		if letterMap[char] {
 			return false
 		}
+
+		letterMap[char] = true
 	}
 
 	return true
